@@ -32,8 +32,8 @@ public class PassbookControllerTest {
     @Test
     public void testShouldGetAllTransactions() throws Exception{	
       this.transactionList = new ArrayList<Transaction>();                    
-      this.transactionList.add(new Transaction("TR001", "Debit", 3000.0,LocalDate.of(2020, 9, 2), "", "", "100000000001", null));  
-      this.transactionList.add(new Transaction("TR002", "Credit", 4000.0,LocalDate.of(2020, 9, 10), "", "", "100000000001", null));
+      this.transactionList.add(new Transaction("TR001", "Debit", 3000.0,LocalDate.of(2020, 9, 2),  "100000000001", null));  
+      this.transactionList.add(new Transaction("TR002", "Credit", 4000.0,LocalDate.of(2020, 9, 10), "100000000001", null));
     	when(passbookService.accountSummary("100000000001",LocalDate.of(2020, 9, 2),LocalDate.of(2020, 9, 10))).thenReturn(transactionList);
     	assertEquals(2,passbookService.accountSummary("100000000001",LocalDate.of(2020, 9, 2),LocalDate.of(2020, 9, 10)).size());
     }
@@ -47,8 +47,8 @@ public class PassbookControllerTest {
     @Test
     public void testUpdatePassbook() throws Exception{
         this.transactionList = new ArrayList<Transaction>();                    
-        this.transactionList.add(new Transaction("TR001", "Debit", 3000.0,LocalDate.of(2020, 9, 2), "", "", "100000000001", null));  
-        this.transactionList.add(new Transaction("TR002", "Credit", 4000.0,LocalDate.of(2020, 9, 10), "", "", "100000000001", null));
+        this.transactionList.add(new Transaction("TR001", "Debit", 3000.0,LocalDate.of(2020, 9, 2),  "100000000001", null));  
+        this.transactionList.add(new Transaction("TR002", "Credit", 4000.0,LocalDate.of(2020, 9, 10), "100000000001", null));
     	when(passbookService.updatePassbook("100000000001")).thenReturn(transactionList);
     	assertEquals(2, passbookService.updatePassbook("100000000001").size());
     }

@@ -1,5 +1,6 @@
 package com.capgemini.pecunia.entity;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -12,8 +13,8 @@ import javax.persistence.Table;
 public class Account {
 	@Id  
 	@Column(length=12)
-	private String accountId;
-	private String accountHolderId;
+	private String accountNumber;
+	private String customerId;
 	@Column(length=15)
 	private String accountBranchId;
 	@Column(length=15)
@@ -22,14 +23,14 @@ public class Account {
 	@Column(length=8)
 	private double accountBalance;
 	@Column(length = 20)
-	private Date lastUpdated;
+	private LocalDate lastUpdated;
 	
 
-	public Account(String accountId, String accountHolderId, String accountBranchId, String accountType,
-			String accountStatus, double accountBalance, Date lastUpdated) {
+	public Account(String accountNumber, String customerId, String accountBranchId, String accountType,
+			String accountStatus, double accountBalance, LocalDate lastUpdated) {
 		super();
-		this.accountId = accountId;
-		this.accountHolderId = accountHolderId;
+		this.accountNumber = accountNumber;
+		this.customerId = customerId;
 		this.accountBranchId = accountBranchId;
 		this.accountType = accountType;
 		this.accountStatus = accountStatus;
@@ -38,23 +39,23 @@ public class Account {
 	}
 
 
-	public String getAccountId() {
-		return accountId;
+	public String getaccountNumber() {
+		return accountNumber;
 	}
 
 
-	public void setAccountId(String accountId) {
-		this.accountId = accountId;
+	public void setaccountNumber(String accountNumber) {
+		this.accountNumber = accountNumber;
 	}
 
 
-	public String getAccountHolderId() {
-		return accountHolderId;
+	public String getcustomerId() {
+		return customerId;
 	}
 
 
-	public void setAccountHolderId(String accountHolderId) {
-		this.accountHolderId = accountHolderId;
+	public void setcustomerId(String customerId) {
+		this.customerId = customerId;
 	}
 
 
@@ -98,18 +99,26 @@ public class Account {
 	}
 
 
-	public Date getLastUpdated() {
+	public LocalDate getLastUpdated() {
 		return lastUpdated;
 	}
 
 
-	public void setLastUpdated(Date lastUpdated) {
+	public void setLastUpdated(LocalDate lastUpdated) {
 		this.lastUpdated = lastUpdated;
 	}
 
 
 	public Account() {
 		super();
+	}
+
+
+	@Override
+	public String toString() {
+		return "Account [accountNumber=" + accountNumber + ", customerId=" + customerId + ", accountBranchId="
+				+ accountBranchId + ", accountType=" + accountType + ", accountStatus=" + accountStatus
+				+ ", accountBalance=" + accountBalance + ", lastUpdated=" + lastUpdated + "]";
 	}
 	
 }
