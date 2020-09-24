@@ -1,6 +1,15 @@
 package com.capgemini.pecunia.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="Address") 
 public class Address {
+	@Id
+	@Column(length=12)
 	private String addressId;
 	private String addressLine1;
 	private String addressLine2;
@@ -8,6 +17,7 @@ public class Address {
 	private String addressCity;
 	private String addressState;
 	private String addressCountry;
+	@Column(length=6)
 	private int addressZipcode;
 	/**
 	 * @return the addressId

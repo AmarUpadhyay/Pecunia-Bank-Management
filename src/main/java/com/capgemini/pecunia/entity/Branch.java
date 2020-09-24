@@ -1,8 +1,18 @@
 package com.capgemini.pecunia.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="Branch") 
 public class Branch {
+	@Id
+	@Column(length=4)
 	private String branchId;
 	private String branchName;
+	@Column(length=12)
 	private String branchAddressId;
 	private String branchIfsc;
 	/**

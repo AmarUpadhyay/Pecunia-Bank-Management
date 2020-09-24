@@ -1,36 +1,59 @@
 package com.capgemini.pecunia.entity;
 
+import java.time.LocalDate;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="Customer") 
 public class Customer {
-	@Id
+	@Id	
+	@Column(length=12)
 	private String custId;
 	private String custName;
 	private String custAddress;
+	@Column(length=12)
 	private String custAadhar;
+	@Column(length=12)
 	private String custPan;
+	@Column(length=10)
 	private String custContact;
-	private Date custDob;
+	private LocalDate custDob;
+	private String custEmail;
+
 	public Customer() {
 		super();
 	}
+
+	public Customer(String custId, String custName, String custAddress, String custAadhar, String custPan,
+			String custContact, LocalDate custDob, String custEmail) {
+		super();
+		this.custId = custId;
+		this.custName = custName;
+		this.custAddress = custAddress;
+		this.custAadhar = custAadhar;
+		this.custPan = custPan;
+		this.custContact = custContact;
+		this.custDob = custDob;
+		this.custEmail = custEmail;
+	}
+	
 	/**
 	 * @return the custDob
 	 */
-	public Date getCustDob() {
+	public LocalDate getCustDob() {
 		return custDob;
 	}
 	/**
 	 * @param custDob the custDob to set
 	 */
-	public void setCustDob(Date custDob) {
+	public void setCustDob(LocalDate custDob) {
 		this.custDob = custDob;
 	}
-	private String custEmail;
 	/**
 	 * @return the custId
 	 */

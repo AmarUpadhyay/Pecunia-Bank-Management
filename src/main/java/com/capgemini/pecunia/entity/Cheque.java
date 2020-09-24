@@ -2,15 +2,27 @@ package com.capgemini.pecunia.entity;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="Cheque") 
 public class Cheque {
+	@Id
+	@Column(length=12)
 	private String chequeId;
+	@Column(length=12)
 	private long chequeNumber;
+	@Column(length=12)
 	private String chequeAccountNumber;
 	private String chequeHolderName;
 	private String chequeBankName;
 	private String chequeIfsc;
 	private Date chequeIssueDate;
 	private String chequeStatus;
+	private Double chequeAmount;
 	/**
 	 * @return the chequeId
 	 */
