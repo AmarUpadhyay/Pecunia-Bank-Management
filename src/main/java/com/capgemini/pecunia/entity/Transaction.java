@@ -29,10 +29,10 @@ public class Transaction {
 	private String chequeNumber;
 	
 	
-	public Transaction(String string, String transType, Double transAmount, LocalDate transDate, String transFrom,
+	public Transaction(String transId, String transType, Double transAmount, LocalDate transDate, String transFrom,
 			String transTo, String accountId, String chequeNumber) {
 		super();
-		this.transId = string;
+		this.transId = transId;
 		this.transType = transType;
 		this.transAmount = transAmount;
 		this.transDate = transDate;

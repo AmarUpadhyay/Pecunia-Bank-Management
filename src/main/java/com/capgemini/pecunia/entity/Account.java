@@ -1,5 +1,6 @@
 package com.capgemini.pecunia.entity;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -22,11 +23,11 @@ public class Account {
 	@Column(length=8)
 	private double accountBalance;
 	@Column(length = 20)
-	private Date lastUpdated;
+	private LocalDate lastUpdated;
 	
 
 	public Account(String accountId, String accountHolderId, String accountBranchId, String accountType,
-			String accountStatus, double accountBalance, Date lastUpdated) {
+			String accountStatus, double accountBalance, LocalDate lastUpdated) {
 		super();
 		this.accountId = accountId;
 		this.accountHolderId = accountHolderId;
@@ -98,18 +99,26 @@ public class Account {
 	}
 
 
-	public Date getLastUpdated() {
+	public LocalDate getLastUpdated() {
 		return lastUpdated;
 	}
 
 
-	public void setLastUpdated(Date lastUpdated) {
+	public void setLastUpdated(LocalDate lastUpdated) {
 		this.lastUpdated = lastUpdated;
 	}
 
 
 	public Account() {
 		super();
+	}
+
+
+	@Override
+	public String toString() {
+		return "Account [accountId=" + accountId + ", accountHolderId=" + accountHolderId + ", accountBranchId="
+				+ accountBranchId + ", accountType=" + accountType + ", accountStatus=" + accountStatus
+				+ ", accountBalance=" + accountBalance + ", lastUpdated=" + lastUpdated + "]";
 	}
 	
 }
