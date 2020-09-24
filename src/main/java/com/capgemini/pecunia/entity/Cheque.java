@@ -1,15 +1,20 @@
 package com.capgemini.pecunia.entity;
 
-import java.util.Date;
+import java.time.LocalDate;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Cheque {
+	@Id
 	private String chequeId;
 	private long chequeNumber;
 	private String chequeAccountNumber;
 	private String chequeHolderName;
 	private String chequeBankName;
 	private String chequeIfsc;
-	private Date chequeIssueDate;
+	private LocalDate chequeIssueDate;
 	private String chequeStatus;
 	/**
 	 * @return the chequeId
@@ -86,13 +91,13 @@ public class Cheque {
 	/**
 	 * @return the chequeIssueDate
 	 */
-	public Date getChequeIssueDate() {
+	public LocalDate getChequeIssueDate() {
 		return chequeIssueDate;
 	}
 	/**
 	 * @param chequeIssueDate the chequeIssueDate to set
 	 */
-	public void setChequeIssueDate(Date chequeIssueDate) {
+	public void setChequeIssueDate(LocalDate chequeIssueDate) {
 		this.chequeIssueDate = chequeIssueDate;
 	}
 	/**
@@ -108,7 +113,7 @@ public class Cheque {
 		this.chequeStatus = chequeStatus;
 	}
 	public Cheque(String chequeId, long chequeNumber, String chequeAccountNumber, String chequeHolderName,
-			String chequeBankName, String chequeIfsc, Date chequeIssueDate, String chequeStatus) {
+			String chequeBankName, String chequeIfsc, LocalDate chequeIssueDate, String chequeStatus) {
 		super();
 		this.chequeId = chequeId;
 		this.chequeNumber = chequeNumber;
