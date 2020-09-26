@@ -12,7 +12,7 @@ import com.capgemini.pecunia.entity.Account;
 import com.capgemini.pecunia.entity.Transaction;
 
 @Repository 
-public interface PassbookDao extends JpaRepository<Account, Long> {
+public interface PassbookRepository extends JpaRepository<Account, Long> {
 	
 	
 	@Query("select t from Transaction t where account_Id=?1 and t.transDate>=?2 and t.transDate<=?3")

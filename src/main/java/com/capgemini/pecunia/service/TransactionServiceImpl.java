@@ -8,34 +8,34 @@ import org.springframework.transaction.annotation.Transactional;
 import com.capgemini.pecunia.entity.Account;
 import com.capgemini.pecunia.entity.Cheque;
 import com.capgemini.pecunia.entity.Transaction;
-import com.capgemini.pecunia.repository.AccountDao;
-import com.capgemini.pecunia.repository.ChequeDao;
-import com.capgemini.pecunia.repository.TransactionDao;
+import com.capgemini.pecunia.repository.AccountRepository;
+import com.capgemini.pecunia.repository.ChequeRepository;
+import com.capgemini.pecunia.repository.TransactionRepository;
 @Service
 @Transactional
 public class TransactionServiceImpl implements TransactionService {
 
 	@Autowired
-	private AccountDao accountDao;
+	private AccountRepository accountRepository;
 	
 	@Autowired
-	private ChequeDao chequeDao;
+	private ChequeRepository chequeRepository;
 	
 	@Autowired
-	private TransactionDao transactionDao;
+	private TransactionRepository transactionRepository;
 	
 	@Override
 	public String creditUsingSlip(long accountNumber, double amount) {
 		Account account=new Account();
 		Transaction transaction=new Transaction();
-		account=accountDao.getOne(accountNumber);
+		account=accountRepository.getOne(accountNumber);
 		account.setAccountBalance(amount+account.getAccountBalance());
 		System.out.println(account);
-		accountDao.save(account);
+		accountRepository.save(account);
 		transaction.setAccount(account);
 		transaction.setTransAmount(amount);
 		transaction.setTransType("Slip");
-		transactionDao.save(transaction);
+		transactionRepository.save(transaction);
 		return "Success";
 	}
 
@@ -44,26 +44,26 @@ public class TransactionServiceImpl implements TransactionService {
 		String transactionStatus="";
 		Transaction transaction=new Transaction();
 		Account account=new Account();
-		double balance=accountDao.getOne(cheque.getChequeAccountNumber()).getAccountBalance();
-		account=accountDao.getOne(cheque.getChequeAccountNumber());
+		double balance=accountRepository.getOne(cheque.getChequeAccountNumber()).getAccountBalance();
+		account=accountRepository.getOne(cheque.getChequeAccountNumber());
 
 		if(balance<cheque.getChequeAmount())
 		{
 			 transactionStatus="Failed";
 			 cheque.setChequeStatus("Reject");
-			 chequeDao.save(cheque);
+			 chequeRepository.save(cheque);
 		}
 		else {
 			balance-=cheque.getChequeAmount();
 			account.setAccountBalance(balance);
-			accountDao.save(account);
+			accountRepository.save(account);
 			transaction.setAccount(account);
 			transaction.setChequeNumber(cheque.getChequeNumber());
 			transaction.setTransAmount(cheque.getChequeAmount());
 			transaction.setTransType("Cheque");
-			transactionDao.save(transaction);
+			transactionRepository.save(transaction);
 			cheque.setChequeStatus("Accepted");
-			chequeDao.save(cheque);
+			chequeRepository.save(cheque);
 			transactionStatus="Success";
 		}
 		return transactionStatus;
@@ -74,17 +74,17 @@ public class TransactionServiceImpl implements TransactionService {
 		Account account=new Account();
 		Transaction transaction=new Transaction();
 		String transactionStatus="";
-		account=accountDao.getOne(accountNumber);
+		account=accountRepository.getOne(accountNumber);
 		if(account.getAccountBalance()<amount)
 			transactionStatus="Failed";
 		else
 		{
 			account.setAccountBalance(account.getAccountBalance()-amount);
-			accountDao.save(account);
+			accountRepository.save(account);
 			transaction.setAccount(account);
 			transaction.setTransAmount(amount);
 			transaction.setTransType("Slip");
-			transactionDao.save(transaction);
+			transactionRepository.save(transaction);
 			transactionStatus="Success";
 		}
 		return transactionStatus;
@@ -95,27 +95,27 @@ public class TransactionServiceImpl implements TransactionService {
 		String transactionStatus="";
 		Transaction transaction=new Transaction();
 		Account account=new Account();
-		double balance=accountDao.getOne(cheque.getChequeAccountNumber()).getAccountBalance();
-		account=accountDao.getOne(cheque.getChequeAccountNumber());
+		double balance=accountRepository.getOne(cheque.getChequeAccountNumber()).getAccountBalance();
+		account=accountRepository.getOne(cheque.getChequeAccountNumber());
 		if(balance<cheque.getChequeAmount())
 		{
 			 transactionStatus="Failed";
 			 cheque.setChequeStatus("Rejected");
-			 chequeDao.save(cheque);
+			 chequeRepository.save(cheque);
 		}	 
 			 
 		else
 		{
 			balance-=cheque.getChequeAmount();
 			account.setAccountBalance(balance);
-			accountDao.save(account);
+			accountRepository.save(account);
 			transaction.setAccount(account);
 			transaction.setChequeNumber(cheque.getChequeNumber());
 			transaction.setTransAmount(cheque.getChequeAmount());
 			transaction.setTransType("Cheque");
-			transactionDao.save(transaction);
+			transactionRepository.save(transaction);
 			cheque.setChequeStatus("Accepted");
-			chequeDao.save(cheque);
+			chequeRepository.save(cheque);
 			transactionStatus="Success";
 		}
 		return transactionStatus;

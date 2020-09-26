@@ -8,13 +8,13 @@ import org.springframework.stereotype.Service;
 
 import com.capgemini.pecunia.entity.Account;
 import com.capgemini.pecunia.entity.Transaction;
-import com.capgemini.pecunia.repository.PassbookDao;
+import com.capgemini.pecunia.repository.PassbookRepository;
 
 @Service
 public class PassbookServiceImpl implements PassbookService {
 
 	@Autowired
-	private PassbookDao dao;
+	private PassbookRepository dao;
 	Account account=new Account();
 	long millis=System.currentTimeMillis();  
 	Date date=new Date(millis); 
