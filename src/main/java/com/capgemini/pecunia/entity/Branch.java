@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Table(name="Branch") 
 public class Branch {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO,generator="seq")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="seq")
 	@SequenceGenerator(name="seq",initialValue=111,allocationSize=100)
 	@Column(length=4)
 	private long branchId;
@@ -23,27 +23,19 @@ public class Branch {
 	private Address address;
 	
 	private String branchIfsc;
-	/**
-	 * @return the branchId
-	 */
+	
 	public long getBranchId() {
 		return branchId;
 	}
-	/**
-	 * @param branchId the branchId to set
-	 */
+	
 	public void setBranchId(long branchId) {
 		this.branchId = branchId;
 	}
-	/**
-	 * @return the branchName
-	 */
+	
 	public String getBranchName() {
 		return branchName;
 	}
-	/**
-	 * @param branchName the branchName to set
-	 */
+	
 	public void setBranchName(String branchName) {
 		this.branchName = branchName;
 	}
@@ -54,15 +46,11 @@ public class Branch {
 	public void setAddress(Address address) {
 		this.address = address;
 	}
-		/**
-	 * @return the branchIfsc
-	 */
+		
 	public String getBranchIfsc() {
 		return branchIfsc;
 	}
-	/**
-	 * @param branchIfsc the branchIfsc to set
-	 */
+	
 	public void setBranchIfsc(String branchIfsc) {
 		this.branchIfsc = branchIfsc;
 	}

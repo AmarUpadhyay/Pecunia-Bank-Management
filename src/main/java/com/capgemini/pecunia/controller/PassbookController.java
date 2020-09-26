@@ -1,30 +1,25 @@
 package com.capgemini.pecunia.controller;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.capgemini.pecunia.entity.Transaction;
 import com.capgemini.pecunia.exception.TransactionDoesNotExist;
-import com.capgemini.pecunia.service.IPassbookService;
+import com.capgemini.pecunia.service.PassbookService;
 
 @RestController
 @RequestMapping("/bank")
 public class PassbookController {
 
 	@Autowired
-	private IPassbookService service;
+	private PassbookService service;
 
 	
 	@GetMapping("/accountSummary/{accountId}/{startDate}/{endDate}")

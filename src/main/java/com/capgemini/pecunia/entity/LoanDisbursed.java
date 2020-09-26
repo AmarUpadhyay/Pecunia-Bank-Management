@@ -18,7 +18,7 @@ import javax.persistence.Table;
 public class LoanDisbursed {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO,generator="seq")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="seq")
 	@SequenceGenerator(name="seq",initialValue=100001,allocationSize=100)
 	@Column(length = 12)
 	private long loanRequestId;

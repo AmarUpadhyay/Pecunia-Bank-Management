@@ -6,18 +6,16 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.capgemini.pecunia.entity.Account;
 import com.capgemini.pecunia.entity.Transaction;
 import com.capgemini.pecunia.exception.AccountDoesNotExistException;
-import com.capgemini.pecunia.exception.GlobalExceptionHandler;
 import com.capgemini.pecunia.exception.TransactionDoesNotExist;
 import com.capgemini.pecunia.repository.PassbookRepository;
 
 @Service
-public class PassbookServiceImpl implements IPassbookService {
+public class PassbookServiceImpl implements PassbookService {
 
 	@Autowired
 	private PassbookRepository dao;

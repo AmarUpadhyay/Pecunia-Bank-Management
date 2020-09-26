@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 import com.capgemini.pecunia.entity.Transaction;
-import com.capgemini.pecunia.service.IPassbookService;
+import com.capgemini.pecunia.service.PassbookService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -22,7 +22,7 @@ public class PassbookControllerTest {
    
                                                  
     @MockBean                           
-    private IPassbookService passbookService;
+    private PassbookService passbookService;
                                                
     private List<Transaction> transactionList;       
                                             

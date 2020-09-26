@@ -17,7 +17,7 @@ import javax.persistence.Table;
 public class LoanRequest {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO,generator="seq")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="seq")
 	@SequenceGenerator(name="seq",initialValue=100001,allocationSize=100)
 	@Column(length = 12)
 	private long loanRequestId;
@@ -51,9 +51,7 @@ public class LoanRequest {
 	public double getLoanAmount() {
 		return loanAmount;
 	}
-	/**
-	 * @param loanAmount the loanAmount to set
-	 */
+	
 	public void setLoanAmount(double loanAmount) {
 		this.loanAmount = loanAmount;
 	}

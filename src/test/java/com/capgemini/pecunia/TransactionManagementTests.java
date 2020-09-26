@@ -16,7 +16,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.capgemini.pecunia.entity.Account;
 import com.capgemini.pecunia.entity.Cheque;
-import com.capgemini.pecunia.entity.Transaction;
 import com.capgemini.pecunia.exception.AccountDoesNotExistException;
 import com.capgemini.pecunia.repository.AccountRepository;
 import com.capgemini.pecunia.repository.TransactionRepository;
