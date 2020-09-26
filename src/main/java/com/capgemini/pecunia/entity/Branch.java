@@ -1,20 +1,35 @@
 package com.capgemini.pecunia.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="Branch") 
 public class Branch {
-	private String branchId;
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO,generator="seq")
+	@SequenceGenerator(name="seq",initialValue=111,allocationSize=100)
+	@Column(length=4)
+	private long branchId;
 	private String branchName;
+	@Column(length=12)
 	private String branchAddressId;
 	private String branchIfsc;
 	/**
 	 * @return the branchId
 	 */
-	public String getBranchId() {
+	public long getBranchId() {
 		return branchId;
 	}
 	/**
 	 * @param branchId the branchId to set
 	 */
-	public void setBranchId(String branchId) {
+	public void setBranchId(long branchId) {
 		this.branchId = branchId;
 	}
 	/**
@@ -55,6 +70,13 @@ public class Branch {
 	}
 	public Branch() {
 		super();
+	}
+	public Branch(long branchId, String branchName, String branchAddressId, String branchIfsc) {
+		super();
+		this.branchId = branchId;
+		this.branchName = branchName;
+		this.branchAddressId = branchAddressId;
+		this.branchIfsc = branchIfsc;
 	}
 	
 }

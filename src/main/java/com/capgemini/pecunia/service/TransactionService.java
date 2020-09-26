@@ -1,13 +1,16 @@
 package com.capgemini.pecunia.service;
 
-import com.capgemini.pecunia.entity.Account;
+
 import com.capgemini.pecunia.entity.Cheque;
+
 
 public interface TransactionService {
 
-	public Account creditUsingSlip(String accountId,double amount) ;
+	public String creditUsingSlip(long accountId,double amount);
 
-	public String creditUsingCheque(Cheque cheque, double amount);
+	public String creditUsingCheque(Cheque cheque);
 
-	public boolean debitUsingSlip(String accountId, double amount);
+	public String debitUsingSlip(long accountId, double amount);
+	
+	public String debitUsingCheque(Cheque cheque);
 }

@@ -1,24 +1,74 @@
+  
 package com.capgemini.pecunia.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+@Entity
+@Table(name="Address") 
 public class Address {
-	private String addressId;
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO,generator="seq")
+	@SequenceGenerator(name="seq",initialValue=101,allocationSize=100)
+	@Column(length=12)
+	private long addressId;
 	private String addressLine1;
 	private String addressLine2;
 	private String addressLine3;
 	private String addressCity;
 	private String addressState;
 	private String addressCountry;
+	@Column(length=6)
 	private int addressZipcode;
-	/**
-	 * @return the addressId
-	 */
-	public String getAddressId() {
+	
+	@ManyToOne(fetch=FetchType.EAGER,optional=false)
+	@JoinColumn(name="custId",nullable=false)
+	@OnDelete(action=OnDeleteAction.CASCADE)
+	private Customer customer;
+	
+	public long getAddressId() {
 		return addressId;
+	}
+	public Address(long addressId, String addressLine1, String addressLine2, String addressLine3, String addressCity,
+			String addressState, String addressCountry, int addressZipcode, Customer customer) {
+		super();
+		this.addressId = addressId;
+		this.addressLine1 = addressLine1;
+		this.addressLine2 = addressLine2;
+		this.addressLine3 = addressLine3;
+		this.addressCity = addressCity;
+		this.addressState = addressState;
+		this.addressCountry = addressCountry;
+		this.addressZipcode = addressZipcode;
+		this.customer = customer;
+	}
+	/**
+	 * @return the customer
+	 */
+	public Customer getCustomer() {
+		return customer;
+	}
+	/**
+	 * @param customer the customer to set
+	 */
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 	/**
 	 * @param addressId the addressId to set
 	 */
-	public void setAddressId(String addressId) {
+	public void setAddressId(long addressId) {
 		this.addressId = addressId;
 	}
 	/**
@@ -112,3 +162,4 @@ public class Address {
 	
 	
 }
+

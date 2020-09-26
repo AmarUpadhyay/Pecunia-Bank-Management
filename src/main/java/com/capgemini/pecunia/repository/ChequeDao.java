@@ -1,4 +1,4 @@
-package com.capgemini.pecunia.dao;
+package com.capgemini.pecunia.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.capgemini.pecunia.entity.Cheque;
 
 @Repository
-public interface ChequeDAO extends JpaRepository<Cheque,String>{
+public interface ChequeDao extends JpaRepository<Cheque,Long>{
 
 }

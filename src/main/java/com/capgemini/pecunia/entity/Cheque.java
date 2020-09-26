@@ -2,118 +2,111 @@ package com.capgemini.pecunia.entity;
 
 import java.time.LocalDate;
 
-import javax.persistence.Entity;
+import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 
 @Entity
+@Table(name="Cheque")
 public class Cheque {
 	@Id
-	private String chequeId;
-	private long chequeNumber;
-	private String chequeAccountNumber;
+	@GeneratedValue(strategy=GenerationType.AUTO,generator="seq")
+	@SequenceGenerator(name="seq",initialValue=10101,allocationSize=100)
+	@Column(length=12)
+	private long chequeId;
+	
+	@Column(length=12)
+	private String chequeNumber;
+	
+	@Column(length=12)
+	private long chequeAccountNumber;
+	
 	private String chequeHolderName;
 	private String chequeBankName;
 	private String chequeIfsc;
 	private LocalDate chequeIssueDate;
 	private String chequeStatus;
-	/**
-	 * @return the chequeId
-	 */
-	public String getChequeId() {
+	private Double chequeAmount;
+	
+	public Double getChequeAmount() {
+		return chequeAmount;
+	}
+	
+	public void setChequeAmount(Double chequeAmount) {
+		this.chequeAmount = chequeAmount;
+	}
+	
+	public long getChequeId() {
 		return chequeId;
 	}
-	/**
-	 * @param chequeId the chequeId to set
-	 */
-	public void setChequeId(String chequeId) {
+	
+	public void setChequeId(long chequeId) {
 		this.chequeId = chequeId;
 	}
-	/**
-	 * @return the chequeNumber
-	 */
-	public long getChequeNumber() {
+	
+	public String getChequeNumber() {
 		return chequeNumber;
 	}
-	/**
-	 * @param chequeNumber the chequeNumber to set
-	 */
-	public void setChequeNumber(long chequeNumber) {
+	
+	public void setChequeNumber(String chequeNumber) {
 		this.chequeNumber = chequeNumber;
 	}
-	/**
-	 * @return the chequeAccountNumber
-	 */
-	public String getChequeAccountNumber() {
+	
+	public long getChequeAccountNumber() {
 		return chequeAccountNumber;
 	}
-	/**
-	 * @param chequeAccountNumber the chequeAccountNumber to set
-	 */
-	public void setChequeAccountNumber(String chequeAccountNumber) {
+	
+	public void setChequeAccountNumber(long chequeAccountNumber) {
 		this.chequeAccountNumber = chequeAccountNumber;
 	}
-	/**
-	 * @return the chequeHolderName
-	 */
+	
 	public String getChequeHolderName() {
 		return chequeHolderName;
 	}
-	/**
-	 * @param chequeHolderName the chequeHolderName to set
-	 */
+	
 	public void setChequeHolderName(String chequeHolderName) {
 		this.chequeHolderName = chequeHolderName;
 	}
-	/**
-	 * @return the chequeBankName
-	 */
+	
 	public String getChequeBankName() {
 		return chequeBankName;
 	}
-	/**
-	 * @param chequeBankName the chequeBankName to set
-	 */
+	
 	public void setChequeBankName(String chequeBankName) {
 		this.chequeBankName = chequeBankName;
 	}
-	/**
-	 * @return the chequeIfsc
-	 */
+	
 	public String getChequeIfsc() {
 		return chequeIfsc;
 	}
-	/**
-	 * @param chequeIfsc the chequeIfsc to set
-	 */
+	
 	public void setChequeIfsc(String chequeIfsc) {
 		this.chequeIfsc = chequeIfsc;
 	}
-	/**
-	 * @return the chequeIssueDate
-	 */
+	
 	public LocalDate getChequeIssueDate() {
 		return chequeIssueDate;
 	}
-	/**
-	 * @param chequeIssueDate the chequeIssueDate to set
-	 */
+	
 	public void setChequeIssueDate(LocalDate chequeIssueDate) {
 		this.chequeIssueDate = chequeIssueDate;
 	}
-	/**
-	 * @return the chequeStatus
-	 */
+	
 	public String getChequeStatus() {
 		return chequeStatus;
 	}
-	/**
-	 * @param chequeStatus the chequeStatus to set
-	 */
+	
 	public void setChequeStatus(String chequeStatus) {
 		this.chequeStatus = chequeStatus;
 	}
-	public Cheque(String chequeId, long chequeNumber, String chequeAccountNumber, String chequeHolderName,
-			String chequeBankName, String chequeIfsc, LocalDate chequeIssueDate, String chequeStatus) {
+	
+	public Cheque(long chequeId, String chequeNumber, long chequeAccountNumber, String chequeHolderName,
+			String chequeBankName, String chequeIfsc, LocalDate chequeIssueDate, String chequeStatus,
+			Double chequeAmount) {
 		super();
 		this.chequeId = chequeId;
 		this.chequeNumber = chequeNumber;
@@ -123,7 +116,9 @@ public class Cheque {
 		this.chequeIfsc = chequeIfsc;
 		this.chequeIssueDate = chequeIssueDate;
 		this.chequeStatus = chequeStatus;
+		this.chequeAmount = chequeAmount;
 	}
+	
 	public Cheque() {
 		super();
 	}

@@ -3,12 +3,17 @@ package com.capgemini.pecunia.entity;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 
 @Entity
 public class Customer {
 	@Id
-	private String custId;
+	@GeneratedValue(strategy=GenerationType.AUTO,generator="seq")
+	@SequenceGenerator(name="seq",initialValue=10000101,allocationSize=100)
+	private long custId;
 	private String custName;
 	private String custAddress;
 	private String custAadhar;
@@ -34,13 +39,13 @@ public class Customer {
 	/**
 	 * @return the custId
 	 */
-	public String getCustId() {
+	public long getCustId() {
 		return custId;
 	}
 	/**
 	 * @param custId the custId to set
 	 */
-	public void setCustId(String custId) {
+	public void setCustId(long custId) {
 		this.custId = custId;
 	}
 	/**

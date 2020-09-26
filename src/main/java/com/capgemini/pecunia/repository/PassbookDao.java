@@ -1,6 +1,5 @@
-package com.capgemini.pecunia.dao;
+package com.capgemini.pecunia.repository;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -13,21 +12,21 @@ import com.capgemini.pecunia.entity.Account;
 import com.capgemini.pecunia.entity.Transaction;
 
 @Repository 
-public interface PassbookDao extends JpaRepository<Account, String> {
+public interface PassbookDao extends JpaRepository<Account, Long> {
 	
 	
 	@Query("select t from Transaction t where account_Id=?1 and t.transDate>=?2 and t.transDate<=?3")
-	List<Transaction> accountSummary(String accountId, LocalDate startDate,LocalDate endDate);
+	List<Transaction> accountSummary(long accountId, Date startDate,Date endDate);
 	
 	@Query("select u from Account u where account_Id=?1")
-	Account get(String accountId);
+	Account get(long accountId);
 	
 	@Query("select t from Transaction t where account_Id=?1 and t.transDate>(select u.lastUpdated from Account u where account_Id=?1) ")
-	List<Transaction> updatePassbook(String accountId);
+	List<Transaction> updatePassbook(long accountId);
 
 	@Modifying
 	@Query("update Account set lastUpdated=?2 where  account_Id=?1")
-	void update(String accountId, Date date);
+	void update(long accountId, Date date);
 
 	
 

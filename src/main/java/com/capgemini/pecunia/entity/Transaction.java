@@ -1,166 +1,141 @@
 package com.capgemini.pecunia.entity;
-
-import java.time.LocalDate;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@EntityListeners(AuditingEntityListener.class)
+@JsonIgnoreProperties(
+		value= {"transDate"},
+		allowGetters=true
+		)
 @Entity
-@Table(name="Transaction") 
+@Table(name = "Transaction")
 public class Transaction {
 	@Id
-	@Column(length=8)
-	private String transId;
-	@Column(length=8)
+	@GeneratedValue(strategy=GenerationType.AUTO,generator="seq")
+	@SequenceGenerator(name="seq",initialValue=1000011,allocationSize=100)
+	@Column(length = 8)
+	private long transId;
+	@Column(length = 8)
 	private String transType;
-	@Column(length=8)
+	@Column(length = 8)
 	private Double transAmount;
-	@Column(length = 20)
-	private LocalDate transDate;
-	@Column(length=12)
-	private String transFrom;
-	@Column(length=12)
-	private String transTo;
-	@Column(length = 12)
-	private String accountId;
-	@Column(length=6)
-	private String chequeNumber;
 	
-	
-	public Transaction(String transId, String transType, Double transAmount, LocalDate transDate, String transFrom,
-			String transTo, String accountId, String chequeNumber) {
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(length = 20,nullable=false,updatable=false)
+	private Date transDate;
+	public Transaction(long transId, String transType, Double transAmount, Date transDate, Account account,
+			String chequeNumber) {
 		super();
 		this.transId = transId;
 		this.transType = transType;
 		this.transAmount = transAmount;
 		this.transDate = transDate;
-		this.transFrom = transFrom;
-		this.transTo = transTo;
-		this.accountId = accountId;
+		this.account = account;
 		this.chequeNumber = chequeNumber;
 	}
 
 
+	@ManyToOne(fetch=FetchType.EAGER,optional=false)
+	@JoinColumn(name="accountNumber",nullable=false)
+	@OnDelete(action=OnDeleteAction.CASCADE)
+	private Account account;
+	@Column(length = 6)
+	private String chequeNumber;
 
-
-	//getters and setters
-
-	public String getChequeNumber() {
-		return chequeNumber;
-	}
-
-
-
-
-	public void setChequeNumber(String chequeNumber) {
-		this.chequeNumber = chequeNumber;
-	}
 	
 	
-	public String getTransId() {
+	public long getTransId() {
 		return transId;
 	}
 
 
-
-
-	public void setTransId(String transId) {
+	
+	public void setTransId(long transId) {
 		this.transId = transId;
 	}
 
 
-
-
+	
 	public String getTransType() {
 		return transType;
 	}
 
 
-
-
+	
 	public void setTransType(String transType) {
 		this.transType = transType;
 	}
 
 
-
-
+	
 	public Double getTransAmount() {
 		return transAmount;
 	}
 
 
-
-
+	
 	public void setTransAmount(Double transAmount) {
 		this.transAmount = transAmount;
 	}
 
 
-
-
-	public LocalDate getTransDate() {
+	
+	public Date getTransDate() {
 		return transDate;
 	}
 
 
-
-
-	public void setTransDate(LocalDate transDate) {
+	
+	public void setTransDate(Date transDate) {
 		this.transDate = transDate;
 	}
 
 
-
-
-	public String getTransFrom() {
-		return transFrom;
+	
+	public Account getAccount() {
+		return account;
 	}
 
 
-
-
-	public void setTransFrom(String transFrom) {
-		this.transFrom = transFrom;
+	
+	public void setAccount(Account account) {
+		this.account = account;
 	}
 
 
-
-
-	public String getTransTo() {
-		return transTo;
+	
+	public String getChequeNumber() {
+		return chequeNumber;
 	}
 
 
-
-
-	public void setTransTo(String transTo) {
-		this.transTo = transTo;
+	
+	public void setChequeNumber(String chequeNumber) {
+		this.chequeNumber = chequeNumber;
 	}
-
-
-
-
-	public String getAccountId() {
-		return accountId;
-	}
-
-
-
-
-	public void setAccountId(String accountId) {
-		this.accountId = accountId;
-	}
-
-
 
 
 	public Transaction() {
 		super();
 	}
-	
-	
-	
+
 }
