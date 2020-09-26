@@ -32,7 +32,7 @@ public class TransactionController {
 		return transactionService.debitUsingSlip(accountNumber, amount);
 	}
 	
-	@PutMapping("DebitUsingCheque")
+	@PutMapping("debitUsingCheque")
 	public String debitUsingCheque(@RequestBody Cheque cheque) {
 		return transactionService.debitUsingCheque(cheque);
 	}

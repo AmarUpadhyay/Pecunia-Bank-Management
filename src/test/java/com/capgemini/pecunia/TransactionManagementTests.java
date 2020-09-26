@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
+import java.util.Date;
+
 import org.junit.Test;
 
 import org.junit.runner.RunWith;
@@ -34,12 +36,13 @@ public class TransactionManagementTests {
 	 private Account account;
 	
 	 private Cheque cheque;
-
+	 
+	 Date date1=new Date(20200830);
 	
 	@Test
 	public void creditUsingSlipTest() {
-		account=new Account(100111,null ,"Savings", "Active", 42000.00, LocalDate.of(2020, 8, 30), null);
-		when(accountRepository.getOne(100111L)).thenReturn(new Account(100111,null ,"Savings", "Active", 40000.00, LocalDate.of(2020, 8, 30), null));
+		account=new Account(100111,null ,"Savings", "Active", 42000.00, date1, null);
+		when(accountRepository.getOne(100111L)).thenReturn(new Account(100111,null ,"Savings", "Active", 40000.00, date1, null));
 		assertEquals("Success",transactionService.creditUsingSlip(100111, 2000.00));
 	}
 	
@@ -47,20 +50,20 @@ public class TransactionManagementTests {
 	public void creditUsingChequeTest() {
 		cheque=new Cheque(10000123, "1000101", 100111, "Amar",
 				"HDFC", "HDFC00661", LocalDate.of(2020, 9, 23) , null,44000.00);
-		when(accountRepository.getOne(100111L)).thenReturn(new Account(100111,null ,"Savings", "Active", 40000.00, LocalDate.of(2020, 8, 30), null));
+		when(accountRepository.getOne(100111L)).thenReturn(new Account(100111,null ,"Savings", "Active", 40000.00, date1, null));
 		assertEquals("Failed",transactionService.creditUsingCheque(cheque));
 	}
 	
 	@Test
 	public void debitUsingSlipWithInsufficientBalanceTest() {
-		account=new Account(100111,null ,"Savings", "Active", 42000.00, LocalDate.of(2020, 8, 30), null);
-		when(accountRepository.getOne(100111L)).thenReturn(new Account(100111,null ,"Savings", "Active", 40000.00, LocalDate.of(2020, 8, 30), null));
+		account=new Account(100111,null ,"Savings", "Active", 42000.00, date1, null);
+		when(accountRepository.getOne(100111L)).thenReturn(new Account(100111,null ,"Savings", "Active", 40000.00, date1, null));
 		assertEquals("Failed",transactionService.debitUsingSlip(100111, 41000.00));
 	}
 	@Test
 	public void debitUsingSlipWithSufficientBalanceTest() {
-		account=new Account(100111,null ,"Savings", "Active", 42000.00, LocalDate.of(2020, 8, 30), null);
-		when(accountRepository.getOne(100111L)).thenReturn(new Account(100111,null ,"Savings", "Active", 40000.00, LocalDate.of(2020, 8, 30), null));
+		account=new Account(100111,null ,"Savings", "Active", 42000.00, date1, null);
+		when(accountRepository.getOne(100111L)).thenReturn(new Account(100111,null ,"Savings", "Active", 40000.00, date1, null));
 		assertEquals("Success",transactionService.debitUsingSlip(100111, 1000.00));
 	}
 	

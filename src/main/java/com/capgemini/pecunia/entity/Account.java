@@ -1,6 +1,7 @@
 package com.capgemini.pecunia.entity;
 
-import java.time.LocalDate;
+import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -13,16 +14,27 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @EntityListeners(AuditingEntityListener.class)
+@JsonIgnoreProperties(
+		value= {"lastUpdated"},
+		allowGetters=true
+		)
 @Entity
 @Table(name="Account")
-public class Account {
+public class Account implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
+
 	@Id  
 	@GeneratedValue(strategy=GenerationType.AUTO,generator="seq")
 	@SequenceGenerator(name="seq",initialValue=100001001,allocationSize=100)
@@ -40,8 +52,10 @@ public class Account {
 	@Column(length=8)
 	private double accountBalance;
 	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false,updatable=true)
 	@CreatedDate
-	private LocalDate lastUpdated;
+	private Date lastUpdated;
 	
 	@ManyToOne(fetch=FetchType.EAGER,optional=false)
 	@JoinColumn(name="custId",nullable=false)
@@ -98,12 +112,12 @@ public class Account {
 	}
 
 	
-	public LocalDate getLastUpdated() {
+	public Date getLastUpdated() {
 		return lastUpdated;
 	}
 
 	
-	public void setLastUpdated(LocalDate lastUpdated) {
+	public void setLastUpdated(Date lastUpdated) {
 		this.lastUpdated = lastUpdated;
 	}
 
@@ -118,7 +132,7 @@ public class Account {
 	}
 
 	public Account(long accountNumber, Branch branch, String accountType, String accountStatus, double accountBalance,
-			LocalDate lastUpdated, Customer customer) {
+			Date lastUpdated, Customer customer) {
 		super();
 		this.accountNumber = accountNumber;
 		this.branch = branch;

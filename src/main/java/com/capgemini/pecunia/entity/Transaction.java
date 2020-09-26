@@ -1,4 +1,5 @@
 package com.capgemini.pecunia.entity;
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -17,6 +18,7 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -28,7 +30,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 		)
 @Entity
 @Table(name = "Transaction")
-public class Transaction {
+public class Transaction implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO,generator="seq")
 	@SequenceGenerator(name="seq",initialValue=1000011,allocationSize=100)
@@ -41,7 +45,9 @@ public class Transaction {
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(length = 20,nullable=false,updatable=false)
+	@CreatedDate
 	private Date transDate;
+	
 	public Transaction(long transId, String transType, Double transAmount, Date transDate, Account account,
 			String chequeNumber) {
 		super();
