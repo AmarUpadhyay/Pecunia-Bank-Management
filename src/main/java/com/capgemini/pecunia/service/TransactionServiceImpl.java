@@ -26,49 +26,44 @@ public class TransactionServiceImpl implements TransactionService {
 	private TransactionRepository transactionRepository;
 	
 	@Override
-	public String creditUsingSlip(long accountNumber, double amount) {
+	public String creditUsingSlip(long accountNumber, double amount) throws AccountDoesNotExistException{
 		Transaction transaction=new Transaction();
 		String status="";
-		accountRepository.findById(accountNumber).ifPresentOrElse(presentAccount->{
-			Account account=new Account();
-			account=presentAccount;
-			account.setAccountBalance(amount+account.getAccountBalance());
-		    System.out.println(account);
-		    accountRepository.save(account);
-		    transaction.setAccount(account);
-			transaction.setTransAmount(amount);
-		    transaction.setTransType("Slip");
-			transactionRepository.save(transaction);
-			 status="Success";
-		},  ()->  new AccountDoesNotExistException());
-
-		
-//		account=accountRepository.getOne(accountNumber);
-//		account.setAccountBalance(amount+account.getAccountBalance());
-//		System.out.println(account);
-//		accountRepository.save(account);
-//		transaction.setAccount(account);
-//		transaction.setTransAmount(amount);
-//		transaction.setTransType("Slip");
-//		transactionRepository.save(transaction);
-		return "Success";
+		Account account=new Account();
+		if(accountRepository.existsById(accountNumber)) {
+	    account=accountRepository.getOne(accountNumber);
+	    account.setAccountBalance(amount+account.getAccountBalance());
+		System.out.println(account);
+	    accountRepository.save(account);
+		transaction.setAccount(account);
+	    transaction.setTransAmount(amount);
+		transaction.setTransType("Slip");
+		transactionRepository.save(transaction);
+		 status="success";
+		}
+		else {
+			throw new AccountDoesNotExistException();
+		}
+		return status;
 	}
 
 	@Override
-	public String creditUsingCheque(Cheque cheque) {
+	public String creditUsingCheque(Cheque cheque) throws AccountDoesNotExistException{
 		String transactionStatus="";
 		Transaction transaction=new Transaction();
 		Account account=new Account();
 		double balance=accountRepository.getOne(cheque.getChequeAccountNumber()).getAccountBalance();
-		account=accountRepository.getOne(cheque.getChequeAccountNumber());
+	    if(accountRepository.existsById(cheque.getChequeAccountNumber()))
+	    {
+		  account=accountRepository.getOne(cheque.getChequeAccountNumber());
 
-		if(balance<cheque.getChequeAmount())
-		{
+		  if(balance<cheque.getChequeAmount())
+		  {
 			 transactionStatus="Failed";
 			 cheque.setChequeStatus("Reject");
 			 chequeRepository.save(cheque);
-		}
-		else {
+		  }
+		  else {
 			balance-=cheque.getChequeAmount();
 			account.setAccountBalance(balance);
 			accountRepository.save(account);
@@ -80,20 +75,25 @@ public class TransactionServiceImpl implements TransactionService {
 			cheque.setChequeStatus("Accepted");
 			chequeRepository.save(cheque);
 			transactionStatus="Success";
-		}
+		  }
+	    }
+	    else{
+	    	throw new AccountDoesNotExistException();
+	    }
 		return transactionStatus;
 	}
 
 	@Override
-	public String debitUsingSlip(long accountNumber, double amount) {
+	public String debitUsingSlip(long accountNumber, double amount) throws AccountDoesNotExistException{
 		Account account=new Account();
 		Transaction transaction=new Transaction();
 		String transactionStatus="";
-		account=accountRepository.getOne(accountNumber);
-		if(account.getAccountBalance()<amount)
+		if(accountRepository.existsById(accountNumber)) {
+		  account=accountRepository.getOne(accountNumber);
+		  if(account.getAccountBalance()<amount)
 			transactionStatus="Failed";
-		else
-		{
+		  else
+		  {
 			account.setAccountBalance(account.getAccountBalance()-amount);
 			accountRepository.save(account);
 			transaction.setAccount(account);
@@ -101,26 +101,33 @@ public class TransactionServiceImpl implements TransactionService {
 			transaction.setTransType("Slip");
 			transactionRepository.save(transaction);
 			transactionStatus="Success";
+		  }
 		}
+		else {
+			throw new AccountDoesNotExistException();
+		}
+			
 		return transactionStatus;
 	}
 
 	@Override
-	public String debitUsingCheque(Cheque cheque) {
+	public String debitUsingCheque(Cheque cheque) throws AccountDoesNotExistException{
 		String transactionStatus="";
 		Transaction transaction=new Transaction();
 		Account account=new Account();
 		double balance=accountRepository.getOne(cheque.getChequeAccountNumber()).getAccountBalance();
-		account=accountRepository.getOne(cheque.getChequeAccountNumber());
-		if(balance<cheque.getChequeAmount())
-		{
+		if(accountRepository.existsById(cheque.getChequeAccountNumber()))
+		{	
+		  account=accountRepository.getOne(cheque.getChequeAccountNumber());
+		  if(balance<cheque.getChequeAmount())
+		  {
 			 transactionStatus="Failed";
 			 cheque.setChequeStatus("Rejected");
 			 chequeRepository.save(cheque);
-		}	 
+		  }	 
 			 
-		else
-		{
+		  else
+		  {
 			balance-=cheque.getChequeAmount();
 			account.setAccountBalance(balance);
 			accountRepository.save(account);
@@ -132,6 +139,11 @@ public class TransactionServiceImpl implements TransactionService {
 			cheque.setChequeStatus("Accepted");
 			chequeRepository.save(cheque);
 			transactionStatus="Success";
+		  }
+		}
+		else
+		{
+			throw new AccountDoesNotExistException();
 		}
 		return transactionStatus;
 	}

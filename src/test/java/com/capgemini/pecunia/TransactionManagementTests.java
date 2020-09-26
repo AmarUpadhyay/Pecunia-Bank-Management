@@ -17,6 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.capgemini.pecunia.entity.Account;
 import com.capgemini.pecunia.entity.Cheque;
 import com.capgemini.pecunia.entity.Transaction;
+import com.capgemini.pecunia.exception.AccountDoesNotExistException;
 import com.capgemini.pecunia.repository.AccountRepository;
 import com.capgemini.pecunia.repository.TransactionRepository;
 import com.capgemini.pecunia.service.TransactionService;
@@ -40,14 +41,14 @@ public class TransactionManagementTests {
 	 Date date1=new Date(20200830);
 	
 	@Test
-	public void creditUsingSlipTest() {
+	public void creditUsingSlipTest() throws AccountDoesNotExistException{
 		account=new Account(100111,null ,"Savings", "Active", 42000.00, date1, null);
 		when(accountRepository.getOne(100111L)).thenReturn(new Account(100111,null ,"Savings", "Active", 40000.00, date1, null));
 		assertEquals("Success",transactionService.creditUsingSlip(100111, 2000.00));
 	}
 	
 	@Test
-	public void creditUsingChequeTest() {
+	public void creditUsingChequeTest() throws AccountDoesNotExistException {
 		cheque=new Cheque(10000123, "1000101", 100111, "Amar",
 				"HDFC", "HDFC00661", LocalDate.of(2020, 9, 23) , null,44000.00);
 		when(accountRepository.getOne(100111L)).thenReturn(new Account(100111,null ,"Savings", "Active", 40000.00, date1, null));
@@ -55,13 +56,13 @@ public class TransactionManagementTests {
 	}
 	
 	@Test
-	public void debitUsingSlipWithInsufficientBalanceTest() {
+	public void debitUsingSlipWithInsufficientBalanceTest() throws AccountDoesNotExistException {
 		account=new Account(100111,null ,"Savings", "Active", 42000.00, date1, null);
 		when(accountRepository.getOne(100111L)).thenReturn(new Account(100111,null ,"Savings", "Active", 40000.00, date1, null));
 		assertEquals("Failed",transactionService.debitUsingSlip(100111, 41000.00));
 	}
 	@Test
-	public void debitUsingSlipWithSufficientBalanceTest() {
+	public void debitUsingSlipWithSufficientBalanceTest() throws AccountDoesNotExistException {
 		account=new Account(100111,null ,"Savings", "Active", 42000.00, date1, null);
 		when(accountRepository.getOne(100111L)).thenReturn(new Account(100111,null ,"Savings", "Active", 40000.00, date1, null));
 		assertEquals("Success",transactionService.debitUsingSlip(100111, 1000.00));

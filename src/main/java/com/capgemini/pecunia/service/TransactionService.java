@@ -2,15 +2,16 @@ package com.capgemini.pecunia.service;
 
 
 import com.capgemini.pecunia.entity.Cheque;
+import com.capgemini.pecunia.exception.AccountDoesNotExistException;
 
 
 public interface TransactionService {
 
-	public String creditUsingSlip(long accountId,double amount);
+	public String creditUsingSlip(long accountId,double amount) throws AccountDoesNotExistException ;
 
-	public String creditUsingCheque(Cheque cheque);
+	public String creditUsingCheque(Cheque cheque) throws AccountDoesNotExistException;
 
-	public String debitUsingSlip(long accountId, double amount);
+	public String debitUsingSlip(long accountId, double amount) throws AccountDoesNotExistException;
 	
-	public String debitUsingCheque(Cheque cheque);
+	public String debitUsingCheque(Cheque cheque) throws AccountDoesNotExistException;
 }

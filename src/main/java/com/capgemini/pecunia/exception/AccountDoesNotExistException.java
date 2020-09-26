@@ -3,7 +3,7 @@ package com.capgemini.pecunia.exception;
 
 
 
-public class AccountDoesNotExistException extends Exception {
+public class AccountDoesNotExistException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 	String message;
