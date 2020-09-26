@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.capgemini.pecunia.entity.Transaction;
 
-public interface PassbookService {
+public interface IPassbookService {
 	List<Transaction> accountSummary(long accountId,Date startDate, Date endDate);
 	boolean accountValidation(long accountId);
 	List<Transaction> updatePassbook(long accountId);

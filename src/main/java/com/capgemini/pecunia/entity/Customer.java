@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
 @Entity
@@ -15,13 +16,68 @@ public class Customer {
 	@SequenceGenerator(name="seq",initialValue=10000101,allocationSize=100)
 	private long custId;
 	private String custName;
-	private String custAddress;
 	private String custAadhar;
 	private String custPan;
 	private String custContact;
 	private Date custDob;
+	private String gender;
+	private String custEmail;
+	
+	@OneToOne
+	private Address address;
+
 	public Customer() {
 		super();
+	}
+	
+	
+	
+
+
+
+	public Customer(long custId, String custName, String custAadhar, String custPan, String custContact, Date custDob,
+			String gender, String custEmail, Address address) {
+		super();
+		this.custId = custId;
+		this.custName = custName;
+		this.custAadhar = custAadhar;
+		this.custPan = custPan;
+		this.custContact = custContact;
+		this.custDob = custDob;
+		this.gender = gender;
+		this.custEmail = custEmail;
+		this.address = address;
+	}
+
+
+
+
+
+
+	public Address getAddress() {
+		return address;
+	}
+
+
+
+
+
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+
+
+
+
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
 	/**
 	 * @return the custDob
@@ -35,7 +91,6 @@ public class Customer {
 	public void setCustDob(Date custDob) {
 		this.custDob = custDob;
 	}
-	private String custEmail;
 	/**
 	 * @return the custId
 	 */
@@ -60,18 +115,7 @@ public class Customer {
 	public void setCustName(String custName) {
 		this.custName = custName;
 	}
-	/**
-	 * @return the custAddress
-	 */
-	public String getCustAddress() {
-		return custAddress;
-	}
-	/**
-	 * @param custAddress the custAddress to set
-	 */
-	public void setCustAddress(String custAddress) {
-		this.custAddress = custAddress;
-	}
+	
 	/**
 	 * @return the custAadhar
 	 */
@@ -96,6 +140,7 @@ public class Customer {
 	public void setCustPan(String custPan) {
 		this.custPan = custPan;
 	}
+	
 	/**
 	 * @return the custContact
 	 */

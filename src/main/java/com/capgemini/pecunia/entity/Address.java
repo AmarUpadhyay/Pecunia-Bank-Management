@@ -32,16 +32,13 @@ public class Address {
 	@Column(length=6)
 	private int addressZipcode;
 	
-	@ManyToOne(fetch=FetchType.EAGER,optional=false)
-	@JoinColumn(name="custId",nullable=false)
-	@OnDelete(action=OnDeleteAction.CASCADE)
-	private Customer customer;
 	
 	public long getAddressId() {
 		return addressId;
 	}
+	
 	public Address(long addressId, String addressLine1, String addressLine2, String addressLine3, String addressCity,
-			String addressState, String addressCountry, int addressZipcode, Customer customer) {
+			String addressState, String addressCountry, int addressZipcode) {
 		super();
 		this.addressId = addressId;
 		this.addressLine1 = addressLine1;
@@ -51,20 +48,8 @@ public class Address {
 		this.addressState = addressState;
 		this.addressCountry = addressCountry;
 		this.addressZipcode = addressZipcode;
-		this.customer = customer;
 	}
-	/**
-	 * @return the customer
-	 */
-	public Customer getCustomer() {
-		return customer;
-	}
-	/**
-	 * @param customer the customer to set
-	 */
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
+
 	/**
 	 * @param addressId the addressId to set
 	 */

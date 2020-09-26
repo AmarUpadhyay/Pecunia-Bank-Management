@@ -11,7 +11,7 @@ import com.capgemini.pecunia.entity.Transaction;
 import com.capgemini.pecunia.repository.PassbookRepository;
 
 @Service
-public class PassbookServiceImpl implements PassbookService {
+public class PassbookServiceImpl implements IPassbookService {
 
 	@Autowired
 	private PassbookRepository dao;
