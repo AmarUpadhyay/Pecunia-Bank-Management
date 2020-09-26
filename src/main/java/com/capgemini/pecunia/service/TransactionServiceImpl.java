@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.capgemini.pecunia.entity.Account;
 import com.capgemini.pecunia.entity.Cheque;
 import com.capgemini.pecunia.entity.Transaction;
+import com.capgemini.pecunia.exception.AccountDoesNotExistException;
 import com.capgemini.pecunia.repository.AccountRepository;
 import com.capgemini.pecunia.repository.ChequeRepository;
 import com.capgemini.pecunia.repository.TransactionRepository;
@@ -26,16 +27,30 @@ public class TransactionServiceImpl implements TransactionService {
 	
 	@Override
 	public String creditUsingSlip(long accountNumber, double amount) {
-		Account account=new Account();
 		Transaction transaction=new Transaction();
-		account=accountRepository.getOne(accountNumber);
-		account.setAccountBalance(amount+account.getAccountBalance());
-		System.out.println(account);
-		accountRepository.save(account);
-		transaction.setAccount(account);
-		transaction.setTransAmount(amount);
-		transaction.setTransType("Slip");
-		transactionRepository.save(transaction);
+		String status="";
+		accountRepository.findById(accountNumber).ifPresentOrElse(presentAccount->{
+			Account account=new Account();
+			account=presentAccount;
+			account.setAccountBalance(amount+account.getAccountBalance());
+		    System.out.println(account);
+		    accountRepository.save(account);
+		    transaction.setAccount(account);
+			transaction.setTransAmount(amount);
+		    transaction.setTransType("Slip");
+			transactionRepository.save(transaction);
+			 status="Success";
+		},  ()->  new AccountDoesNotExistException());
+
+		
+//		account=accountRepository.getOne(accountNumber);
+//		account.setAccountBalance(amount+account.getAccountBalance());
+//		System.out.println(account);
+//		accountRepository.save(account);
+//		transaction.setAccount(account);
+//		transaction.setTransAmount(amount);
+//		transaction.setTransType("Slip");
+//		transactionRepository.save(transaction);
 		return "Success";
 	}
 
