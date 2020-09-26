@@ -35,8 +35,8 @@ public class PassbookControllerTest {
         this.transactionList = new ArrayList<Transaction>();                    
         this.transactionList.add(new Transaction(001, "Credit", 4000.0,date1, null, ""));
         this.transactionList.add(new Transaction(002, "Credit", 4000.0,date2, null, ""));
-    	when(passbookService.accountSummary(10000001,date1,date2)).thenReturn(transactionList);
-    	assertEquals(2,passbookService.accountSummary(10000001,date1,date2).size());
+    	when(passbookService.accountSummary(10000001,"2020-09-06","2020-09-11")).thenReturn(transactionList);
+    	assertEquals(2,passbookService.accountSummary(10000001,"2020-09-06","2020-09-11").size());
     }
     
     @Test

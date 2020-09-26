@@ -1,5 +1,7 @@
 package com.capgemini.pecunia.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.capgemini.pecunia.entity.Transaction;
+import com.capgemini.pecunia.exception.TransactionDoesNotExist;
 import com.capgemini.pecunia.service.IPassbookService;
 
 @RestController
@@ -25,19 +28,13 @@ public class PassbookController {
 
 	
 	@GetMapping("/accountSummary/{accountId}/{startDate}/{endDate}")
-	public ResponseEntity<List<Transaction>> accountSummary(@PathVariable long accountId, @PathVariable Date startDate, @PathVariable Date endDate) 
+	public ResponseEntity<List<Transaction>> accountSummary(@PathVariable long accountId, @PathVariable String startDate, @PathVariable String endDate) throws TransactionDoesNotExist  
 	{
 		List<Transaction> list = service.accountSummary(accountId, startDate, endDate);
 		return new ResponseEntity<>(list, HttpStatus.OK);
-		}
-		
-	
-	@ResponseStatus(value=HttpStatus.NOT_FOUND,reason="Please enter Valid details")
-	
-	@ExceptionHandler({Exception.class})
-	public void handleException() {
-		
 	}
+		
+	
 	
 	//Validating accountId whether is is present or not.
 	@GetMapping("/accountValidation/{accountId}")
@@ -47,7 +44,7 @@ public class PassbookController {
 
 	//Fetching the transactions till last updated date
 		@GetMapping("/updatePassbook/{accountId}")
-		public  ResponseEntity<List<Transaction>> updatePassbook(@PathVariable("accountId") long accountId)
+		public  ResponseEntity<List<Transaction>> updatePassbook(@PathVariable("accountId") long accountId) throws TransactionDoesNotExist
 		{
 				List<Transaction> list = service.updatePassbook(accountId);
 				return new ResponseEntity<>(list, HttpStatus.OK);

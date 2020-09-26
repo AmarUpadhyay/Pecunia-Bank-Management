@@ -3,6 +3,8 @@ package com.capgemini.pecunia.repository;
 import java.util.Date;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -25,6 +27,7 @@ public interface PassbookRepository extends JpaRepository<Account, Long> {
 	List<Transaction> updatePassbook(long accountId);
 
 	@Modifying
+	@Transactional
 	@Query("update Account set lastUpdated=?2 where  account_number=?1")
 	void update(long accountId, Date date);
 
