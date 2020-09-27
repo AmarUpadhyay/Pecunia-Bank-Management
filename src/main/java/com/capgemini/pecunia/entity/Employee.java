@@ -8,6 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="Employee") 
@@ -18,9 +21,14 @@ public class Employee {
 	@Column(length=12)
     private long empId;
 	
+	@NotNull
 	private String empName;
+	@Email(message="Please Enter a valid email id!!")
 	private String empEmail;
+	@NotNull
+	@Size(min=5,max=8)
 	private String empPassword;
+	@NotNull
 	private String empDesignation;
 		 
 	@OneToOne

@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="Branch") 
@@ -17,11 +18,12 @@ public class Branch {
 	@SequenceGenerator(name="seq",initialValue=111,allocationSize=100)
 	@Column(length=4)
 	private long branchId;
+	@NotNull
 	private String branchName;
 	
 	@OneToOne
 	private Address address;
-	
+	@NotNull
 	private String branchIfsc;
 	
 	public long getBranchId() {

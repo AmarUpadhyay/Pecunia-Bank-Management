@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 
 @Entity
@@ -18,13 +19,18 @@ public class Address {
 	@SequenceGenerator(name="seq",initialValue=101,allocationSize=100)
 	@Column(length=12)
 	private long addressId;
+	@NotNull
 	private String addressLine1;
 	private String addressLine2;
 	private String addressLine3;
+	@NotNull
 	private String addressCity;
+	@NotNull
 	private String addressState;
+	@NotNull
 	private String addressCountry;
 	@Column(length=6)
+	@NotNull
 	private int addressZipcode;
 	
 	

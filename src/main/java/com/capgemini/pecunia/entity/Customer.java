@@ -8,6 +8,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Customer {
@@ -15,12 +18,19 @@ public class Customer {
 	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="seq")
 	@SequenceGenerator(name="seq",initialValue=10000101,allocationSize=100)
 	private long custId;
+	@NotNull
 	private String custName;
+	@NotNull
 	private String custAadhar;
+	@NotNull
 	private String custPan;
+	@Size(min=10,max=10)
 	private String custContact;
+	@NotNull
 	private Date custDob;
+	@NotNull
 	private String gender;
+	@Email(message="Enter valid email id!!")
 	private String custEmail;
 	
 	@OneToOne
