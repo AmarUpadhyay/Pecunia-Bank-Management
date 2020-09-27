@@ -16,8 +16,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.capgemini.pecunia.entity.Account;
 import com.capgemini.pecunia.entity.Cheque;
+import com.capgemini.pecunia.entity.Transaction;
 import com.capgemini.pecunia.exception.AccountDoesNotExistException;
 import com.capgemini.pecunia.repository.AccountRepository;
+import com.capgemini.pecunia.repository.TransactionRepository;
 import com.capgemini.pecunia.service.TransactionService;
 
 @RunWith(SpringRunner.class)
@@ -30,17 +32,22 @@ public class TransactionManagementTests {
 
 	@MockBean
 	private AccountRepository accountRepository;
-	
+	@MockBean
+	private TransactionRepository transactionRepository;
 	private Account account;
-	 private Cheque cheque;
+	private Cheque cheque;
+	private Transaction transaction;
 	 
 	 Date date1=new Date(8302020);
 	
 	@Test
 	public void creditUsingSlipTest() throws AccountDoesNotExistException{
 	    account=new Account(1000120,null ,"Savings", "Active", 42000.00, date1, null);
+	    transaction=new Transaction(109L, "Slip", 2000.0, date1, account, "");
 		when(accountRepository.getOne(1000120L)).thenReturn(account);
 		when(accountRepository.existsById(1000120L)).thenReturn(true);
+		when(accountRepository.save(account)).thenReturn(account);
+		when(transactionRepository.save(transaction)).thenReturn(transaction);
 		assertEquals("Success",transactionService.creditUsingSlip(1000120, 2000.00));
 	}
 	
@@ -62,10 +69,12 @@ public class TransactionManagementTests {
 	}
 	@Test
 	public void debitUsingSlipWithSufficientBalanceTest() throws AccountDoesNotExistException {
-		account=new Account(1000120,null ,"Savings", "Active", 42000.00, date1, null);
+		account=new Account(1000120,null ,"Savings", "Active", 39000.00, date1, null);
+	    transaction=new Transaction(108L, "Slip", 1000.0, date1, account, "");
 		when(accountRepository.getOne(1000120L)).thenReturn(new Account(1000120,null ,"Savings", "Active", 40000.00, date1, null));
 		when(accountRepository.existsById(1000120L)).thenReturn(true);
-
+		when(accountRepository.save(account)).thenReturn(account);
+		when(transactionRepository.save(transaction)).thenReturn(transaction);
 		assertEquals("Success",transactionService.debitUsingSlip(1000120, 1000.00));
 	}
 	
