@@ -25,54 +25,48 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties(
-		value= {"lastUpdated"},
-		allowGetters=true
-		)
+@JsonIgnoreProperties(value = { "lastUpdated" }, allowGetters = true)
 @Entity
-@Table(name="Account")
-public class Account implements Serializable{
-	
+@Table(name = "Account")
+public class Account implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
-	@Id  
-	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="seq")
-	@SequenceGenerator(name="seq",initialValue=100001001,allocationSize=100)
-	@Column(length=12)
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
+	@SequenceGenerator(name = "seq", initialValue = 100001001, allocationSize = 100)
+	@Column(length = 12)
 	private long accountNumber;
-	
+
 	@OneToOne
 	private Branch branch;
-	
-	@Column(length=15)
+
+	@Column(length = 15)
 	private String accountType;
-	
+
 	private String accountStatus;
-	
-	@Column(length=8)
+
+	@Column(length = 8)
 	private double accountBalance;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable=false,updatable=true)
+	@Column(nullable = false, updatable = true)
 	@CreatedDate
 	private Date lastUpdated;
-	
-	@ManyToOne(fetch=FetchType.EAGER,optional=false)
-	@JoinColumn(name="custId",nullable=false)
-	@OnDelete(action=OnDeleteAction.CASCADE)
+
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	@JoinColumn(name = "custId", nullable = false)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Customer customer;
 
-	
 	public long getAccountNumber() {
 		return accountNumber;
 	}
 
-	
 	public void setAccountNumber(long accountNumber) {
 		this.accountNumber = accountNumber;
 	}
 
-	
 	public Branch getBranch() {
 		return branch;
 	}
@@ -81,56 +75,55 @@ public class Account implements Serializable{
 		this.branch = branch;
 	}
 
-	
 	public String getAccountType() {
 		return accountType;
 	}
 
-	
 	public void setAccountType(String accountType) {
 		this.accountType = accountType;
 	}
 
-	
 	public String getAccountStatus() {
 		return accountStatus;
 	}
 
-	
 	public void setAccountStatus(String accountStatus) {
 		this.accountStatus = accountStatus;
 	}
 
-	
 	public double getAccountBalance() {
 		return accountBalance;
 	}
 
-	
 	public void setAccountBalance(double accountBalance) {
 		this.accountBalance = accountBalance;
 	}
 
-	
 	public Date getLastUpdated() {
 		return lastUpdated;
 	}
 
-	
 	public void setLastUpdated(Date lastUpdated) {
 		this.lastUpdated = lastUpdated;
 	}
 
-	
 	public Customer getCustomer() {
 		return customer;
 	}
 
-	
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
-
+	/**
+	 * 
+	 * @param accountNumber
+	 * @param branch
+	 * @param accountType
+	 * @param accountStatus
+	 * @param accountBalance
+	 * @param lastUpdated
+	 * @param customer
+	 */
 	public Account(long accountNumber, Branch branch, String accountType, String accountStatus, double accountBalance,
 			Date lastUpdated, Customer customer) {
 		super();
@@ -146,6 +139,5 @@ public class Account implements Serializable{
 	public Account() {
 		super();
 	}
-	
 
 }
