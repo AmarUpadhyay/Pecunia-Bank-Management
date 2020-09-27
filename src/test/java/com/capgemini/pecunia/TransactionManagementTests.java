@@ -18,53 +18,55 @@ import com.capgemini.pecunia.entity.Account;
 import com.capgemini.pecunia.entity.Cheque;
 import com.capgemini.pecunia.exception.AccountDoesNotExistException;
 import com.capgemini.pecunia.repository.AccountRepository;
-import com.capgemini.pecunia.repository.TransactionRepository;
 import com.capgemini.pecunia.service.TransactionService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class TransactionManagementTests {
+	
 	@Autowired
 	private TransactionService transactionService;
 	
-	@MockBean
-	private TransactionRepository transactionRepository;
-	
+
 	@MockBean
 	private AccountRepository accountRepository;
 	
-	 private Account account;
-	
+	private Account account;
 	 private Cheque cheque;
 	 
-	 Date date1=new Date(20200830);
+	 Date date1=new Date(8302020);
 	
 	@Test
 	public void creditUsingSlipTest() throws AccountDoesNotExistException{
-		account=new Account(100111,null ,"Savings", "Active", 42000.00, date1, null);
-		when(accountRepository.getOne(100111L)).thenReturn(new Account(100111,null ,"Savings", "Active", 40000.00, date1, null));
-		assertEquals("Success",transactionService.creditUsingSlip(100111, 2000.00));
+	    account=new Account(1000120,null ,"Savings", "Active", 42000.00, date1, null);
+		when(accountRepository.getOne(1000120L)).thenReturn(account);
+		when(accountRepository.existsById(1000120L)).thenReturn(true);
+		assertEquals("Success",transactionService.creditUsingSlip(1000120, 2000.00));
 	}
 	
 	@Test
 	public void creditUsingChequeTest() throws AccountDoesNotExistException {
-		cheque=new Cheque(10000123, "1000101", 100111, "Amar",
+		cheque=new Cheque(10000123, "1000101", 1000120, "Amar",
 				"HDFC", "HDFC00661", LocalDate.of(2020, 9, 23) , null,44000.00);
-		when(accountRepository.getOne(100111L)).thenReturn(new Account(100111,null ,"Savings", "Active", 40000.00, date1, null));
+		when(accountRepository.getOne(1000120L)).thenReturn(new Account(1000120,null ,"Savings", "Active", 40000.00, date1, null));
+		when(accountRepository.existsById(1000120L)).thenReturn(true);
 		assertEquals("Failed",transactionService.creditUsingCheque(cheque));
 	}
 	
 	@Test
 	public void debitUsingSlipWithInsufficientBalanceTest() throws AccountDoesNotExistException {
-		account=new Account(100111,null ,"Savings", "Active", 42000.00, date1, null);
-		when(accountRepository.getOne(100111L)).thenReturn(new Account(100111,null ,"Savings", "Active", 40000.00, date1, null));
-		assertEquals("Failed",transactionService.debitUsingSlip(100111, 41000.00));
+		account=new Account(1000120,null ,"Savings", "Active", 42000.00, date1, null);
+		when(accountRepository.getOne(1000120L)).thenReturn(new Account(1000120,null ,"Savings", "Active", 40000.00, date1, null));
+		when(accountRepository.existsById(1000120L)).thenReturn(true);
+		assertEquals("Failed",transactionService.debitUsingSlip(1000120, 41000.00));
 	}
 	@Test
 	public void debitUsingSlipWithSufficientBalanceTest() throws AccountDoesNotExistException {
-		account=new Account(100111,null ,"Savings", "Active", 42000.00, date1, null);
-		when(accountRepository.getOne(100111L)).thenReturn(new Account(100111,null ,"Savings", "Active", 40000.00, date1, null));
-		assertEquals("Success",transactionService.debitUsingSlip(100111, 1000.00));
+		account=new Account(1000120,null ,"Savings", "Active", 42000.00, date1, null);
+		when(accountRepository.getOne(1000120L)).thenReturn(new Account(1000120,null ,"Savings", "Active", 40000.00, date1, null));
+		when(accountRepository.existsById(1000120L)).thenReturn(true);
+
+		assertEquals("Success",transactionService.debitUsingSlip(1000120, 1000.00));
 	}
 	
 }

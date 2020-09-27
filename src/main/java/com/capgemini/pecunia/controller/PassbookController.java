@@ -31,7 +31,7 @@ public class PassbookController {
 		
 	
 	
-	//Validating accountId whether is is present or not.
+	//Validating accountId whether  is present or not.
 	@GetMapping("/accountValidation/{accountId}")
 	public boolean accountValidation(@PathVariable("accountId") long accountId) {
 		return service.accountValidation(accountId);
