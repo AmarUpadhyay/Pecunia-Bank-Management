@@ -9,6 +9,7 @@ import com.capgemini.pecunia.entity.Account;
 import com.capgemini.pecunia.entity.Cheque;
 import com.capgemini.pecunia.entity.Transaction;
 import com.capgemini.pecunia.exception.AccountDoesNotExistException;
+import com.capgemini.pecunia.exception.TransactionDoesNotExist;
 import com.capgemini.pecunia.repository.AccountRepository;
 import com.capgemini.pecunia.repository.ChequeRepository;
 import com.capgemini.pecunia.repository.TransactionRepository;
@@ -24,6 +25,16 @@ public class TransactionServiceImpl implements TransactionService {
 	
 	@Autowired
 	private TransactionRepository transactionRepository;
+	
+	/**
+	 * Returns the status of the transaction 
+	 * i.e. success or failed.
+	 * 
+	 * @param accountNumber
+	 * @param amount
+	 * @return
+	 * @throws AccountDoesNotExistException
+	 */
 	
 	@Override
 	public String creditUsingSlip(long accountNumber, double amount) throws AccountDoesNotExistException{
@@ -46,7 +57,15 @@ public class TransactionServiceImpl implements TransactionService {
 		}
 		return status;
 	}
-
+	
+	/**
+	 * Returns the status of the transaction  
+	 * i.e. success if sufficient amount available in payer account or failed.
+	 * 
+	 * @param cheque
+	 * @return
+	 * @throws AccountDoesNotExistException
+	 */
 	@Override
 	public String creditUsingCheque(Cheque cheque) throws AccountDoesNotExistException{
 		String transactionStatus="";
@@ -82,7 +101,16 @@ public class TransactionServiceImpl implements TransactionService {
 	    }
 		return transactionStatus;
 	}
-
+	
+	/**
+	 * Returns the status of the transaction 
+	 *i.e. success if sufficient balance available in customer's account or failed.
+	 * 
+	 * @param accountNumber
+	 * @param amount
+	 * @return
+	 * @throws AccountDoesNotExistException
+	 */
 	@Override
 	public String debitUsingSlip(long accountNumber, double amount) throws AccountDoesNotExistException{
 		Account account=new Account();
@@ -109,7 +137,15 @@ public class TransactionServiceImpl implements TransactionService {
 			
 		return transactionStatus;
 	}
-
+	
+	/**
+	 * Returns the status of the transaction 
+	 * i.e. success if sufficient amount available in payer account or failed.
+	 * 
+	 * @param cheque
+	 * @return
+	 * @throws AccountDoesNotExistException
+	 */
 	@Override
 	public String debitUsingCheque(Cheque cheque) throws AccountDoesNotExistException{
 		String transactionStatus="";
