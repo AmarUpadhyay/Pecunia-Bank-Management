@@ -1,6 +1,7 @@
 package com.capgemini.pecunia.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +17,7 @@ import com.capgemini.pecunia.service.TransactionService;
  * @author Amar
  *
  */
+@CrossOrigin(origins="http://localhost:4200")
 @RestController
 @RequestMapping(value="/api/transaction")
 public class TransactionController {
@@ -46,9 +48,11 @@ public class TransactionController {
 	 * @return
 	 * @throws AccountDoesNotExistException
 	 */
-	@PutMapping("creditUsingCheque")
-	public String creditUsingCheque(@RequestBody Cheque cheque) throws AccountDoesNotExistException{
-		return transactionService.creditUsingCheque(cheque);
+	@PutMapping("creditUsingCheque/{payeeAccountNumber}")
+	public String creditUsingCheque(@RequestBody Cheque cheque,@PathVariable long payeeAccountNumber) throws AccountDoesNotExistException{
+		System.out.println(cheque.toString());
+		return transactionService.creditUsingCheque(cheque,payeeAccountNumber);
+		
 	}
 	
 	/**
@@ -73,8 +77,8 @@ public class TransactionController {
 	 * @return
 	 * @throws AccountDoesNotExistException
 	 */
-	@PutMapping("debitUsingCheque")
-	public String debitUsingCheque(@RequestBody Cheque cheque) throws AccountDoesNotExistException {
-		return transactionService.debitUsingCheque(cheque);
+	@PutMapping("debitUsingCheque/{payeeAccountNumber}")
+	public String debitUsingCheque(@RequestBody Cheque cheque,@PathVariable long payeeAccountNumber) throws AccountDoesNotExistException {
+		return transactionService.debitUsingCheque(cheque,payeeAccountNumber);
 	}
 }

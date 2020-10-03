@@ -66,26 +66,32 @@ public class TransactionServiceImpl implements TransactionService {
 	 * @throws AccountDoesNotExistException
 	 */
 	@Override
-	public String creditUsingCheque(Cheque cheque) throws AccountDoesNotExistException{
+	public String creditUsingCheque(Cheque cheque,long payeeAccountNumber) throws AccountDoesNotExistException{
 		String transactionStatus="";
-		Transaction transaction=new Transaction();
-		Account account=new Account();
-		double balance=accountRepository.getOne(cheque.getChequeAccountNumber()).getAccountBalance();
-	    if(accountRepository.existsById(cheque.getChequeAccountNumber()))
+		
+	    if(accountRepository.existsById(cheque.getChequeAccountNumber())&&accountRepository.existsById(payeeAccountNumber))
 	    {
-		  account=accountRepository.getOne(cheque.getChequeAccountNumber());
-
-		  if(balance<cheque.getChequeAmount())
+	    	Transaction transaction=new Transaction();
+			Account payerAccount=new Account();
+			Account payeeAccount=new Account();
+			double payerBalance=accountRepository.getOne(cheque.getChequeAccountNumber()).getAccountBalance();
+		    payerAccount=accountRepository.getOne(cheque.getChequeAccountNumber());
+		    payeeAccount=accountRepository.getOne(payeeAccountNumber);
+		    double payeeBalance=payeeAccount.getAccountBalance();
+		  if(payerBalance<cheque.getChequeAmount())
 		  {
 			 transactionStatus="Failed";
 			 cheque.setChequeStatus("Reject");
 			 chequeRepository.save(cheque);
 		  }
 		  else {
-			balance-=cheque.getChequeAmount();
-			account.setAccountBalance(balance);
-			accountRepository.save(account);
-			transaction.setAccount(account);
+			payerBalance-=cheque.getChequeAmount();
+			payerAccount.setAccountBalance(payerBalance);
+			accountRepository.save(payerAccount);
+			payeeBalance+=cheque.getChequeAmount();
+			payeeAccount.setAccountBalance(payeeBalance);
+			accountRepository.save(payeeAccount);
+			transaction.setAccount(payeeAccount);
 			transaction.setChequeNumber(cheque.getChequeNumber());
 			transaction.setTransAmount(cheque.getChequeAmount());
 			transaction.setTransType("Cheque");
@@ -146,41 +152,44 @@ public class TransactionServiceImpl implements TransactionService {
 	 * @throws AccountDoesNotExistException
 	 */
 	@Override
-	public String debitUsingCheque(Cheque cheque) throws AccountDoesNotExistException{
-		String transactionStatus="";
-		Transaction transaction=new Transaction();
-		Account account=new Account();
-		double balance=accountRepository.getOne(cheque.getChequeAccountNumber()).getAccountBalance();
-		if(accountRepository.existsById(cheque.getChequeAccountNumber()))
-		{	
-		  account=accountRepository.getOne(cheque.getChequeAccountNumber());
-		  if(balance<cheque.getChequeAmount())
-		  {
-			 transactionStatus="Failed";
-			 cheque.setChequeStatus("Rejected");
-			 chequeRepository.save(cheque);
-		  }	 
-			 
-		  else
-		  {
-			balance-=cheque.getChequeAmount();
-			account.setAccountBalance(balance);
-			accountRepository.save(account);
-			transaction.setAccount(account);
-			transaction.setChequeNumber(cheque.getChequeNumber());
-			transaction.setTransAmount(cheque.getChequeAmount());
-			transaction.setTransType("Cheque");
-			transactionRepository.save(transaction);
-			cheque.setChequeStatus("Accepted");
-			chequeRepository.save(cheque);
-			transactionStatus="Success";
-		  }
-		}
-		else
-		{
-			throw new AccountDoesNotExistException();
-		}
-		return transactionStatus;
+	public String debitUsingCheque(Cheque cheque,long payeeAccountNumber) throws AccountDoesNotExistException{
+		 String transactionStatus="";
+		 if(accountRepository.existsById(cheque.getChequeAccountNumber())&&accountRepository.existsById(payeeAccountNumber))
+		    {
+		    	Transaction transaction=new Transaction();
+				Account payerAccount=new Account();
+				Account payeeAccount=new Account();
+				double payerBalance=accountRepository.getOne(cheque.getChequeAccountNumber()).getAccountBalance();
+			    payerAccount=accountRepository.getOne(cheque.getChequeAccountNumber());
+			    payeeAccount=accountRepository.getOne(payeeAccountNumber);
+			    double payeeBalance=payeeAccount.getAccountBalance();
+			  if(payerBalance<cheque.getChequeAmount())
+			  {
+				 transactionStatus="Failed";
+				 cheque.setChequeStatus("Reject");
+				 chequeRepository.save(cheque);
+			  }
+			  else {
+				payerBalance-=cheque.getChequeAmount();
+				payerAccount.setAccountBalance(payerBalance);
+				accountRepository.save(payerAccount);
+				payeeBalance+=cheque.getChequeAmount();
+				payeeAccount.setAccountBalance(payeeBalance);
+				accountRepository.save(payeeAccount);
+				transaction.setAccount(payeeAccount);
+				transaction.setChequeNumber(cheque.getChequeNumber());
+				transaction.setTransAmount(cheque.getChequeAmount());
+				transaction.setTransType("Cheque");
+				transactionRepository.save(transaction);
+				cheque.setChequeStatus("Accepted");
+				chequeRepository.save(cheque);
+				transactionStatus="Success";
+			  }
+		    }
+		    else{
+		    	throw new AccountDoesNotExistException();
+		    }
+			return transactionStatus;
 	}
 		
 	}

@@ -56,8 +56,9 @@ public class TransactionManagementTests {
 		cheque=new Cheque(10000123, "1000101", 1000120, "Amar",
 				"HDFC", "HDFC00661", LocalDate.of(2020, 9, 23) , null,44000.00);
 		when(accountRepository.getOne(1000120L)).thenReturn(new Account(1000120,null ,"Savings", "Active", 40000.00, date1, null));
+		when(accountRepository.getOne(1000121L)).thenReturn(new Account(1000121,null ,"Savings", "Active", 40000.00, date1, null));
 		when(accountRepository.existsById(1000120L)).thenReturn(true);
-		assertEquals("Failed",transactionService.creditUsingCheque(cheque));
+		assertEquals("Failed",transactionService.creditUsingCheque(cheque,1000121));
 	}
 	
 	@Test

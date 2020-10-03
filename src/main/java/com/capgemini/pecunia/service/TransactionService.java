@@ -9,9 +9,9 @@ public interface TransactionService {
 
 	public String creditUsingSlip(long accountId,double amount) throws AccountDoesNotExistException ;
 
-	public String creditUsingCheque(Cheque cheque) throws AccountDoesNotExistException;
+	public String creditUsingCheque(Cheque cheque,long payeeAccountNumber) throws AccountDoesNotExistException;
 
 	public String debitUsingSlip(long accountId, double amount) throws AccountDoesNotExistException;
 	
-	public String debitUsingCheque(Cheque cheque) throws AccountDoesNotExistException;
+	public String debitUsingCheque(Cheque cheque,long payeeAccountNumber) throws AccountDoesNotExistException;
 }
