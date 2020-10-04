@@ -16,7 +16,7 @@ import static org.mockito.Mockito.when;
 
 import com.capgemini.pecunia.entity.Transaction;
 import com.capgemini.pecunia.exception.TransactionDoesNotExist;
-import com.capgemini.pecunia.service.PassbookService;
+import com.capgemini.pecunia.service.IPassbookService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -24,7 +24,7 @@ public class PassbookControllerTest {
    
                                                  
     @Autowired                   
-    private PassbookService passbookService;
+    private IPassbookService passbookService;
                                                
     private List<Transaction> transactionList;       
                                             

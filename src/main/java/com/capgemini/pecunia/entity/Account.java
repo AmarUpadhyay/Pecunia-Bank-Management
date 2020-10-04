@@ -2,6 +2,8 @@ package com.capgemini.pecunia.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -54,9 +56,9 @@ public class Account implements Serializable {
 	@CreatedDate
 	private Date lastUpdated;
 
-	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "custId", nullable = false)
-	@OnDelete(action = OnDeleteAction.CASCADE)
+//	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Customer customer;
 
 	public long getAccountNumber() {

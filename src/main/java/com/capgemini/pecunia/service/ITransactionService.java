@@ -5,7 +5,7 @@ import com.capgemini.pecunia.entity.Cheque;
 import com.capgemini.pecunia.exception.AccountDoesNotExistException;
 
 
-public interface TransactionService {
+public interface ITransactionService {
 
 	public String creditUsingSlip(long accountId,double amount) throws AccountDoesNotExistException ;
 

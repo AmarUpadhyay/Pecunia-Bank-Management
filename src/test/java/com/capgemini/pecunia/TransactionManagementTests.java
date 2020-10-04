@@ -20,14 +20,14 @@ import com.capgemini.pecunia.entity.Transaction;
 import com.capgemini.pecunia.exception.AccountDoesNotExistException;
 import com.capgemini.pecunia.repository.AccountRepository;
 import com.capgemini.pecunia.repository.TransactionRepository;
-import com.capgemini.pecunia.service.TransactionService;
+import com.capgemini.pecunia.service.ITransactionService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class TransactionManagementTests {
 	
 	@Autowired
-	private TransactionService transactionService;
+	private ITransactionService transactionService;
 	
 
 	@MockBean

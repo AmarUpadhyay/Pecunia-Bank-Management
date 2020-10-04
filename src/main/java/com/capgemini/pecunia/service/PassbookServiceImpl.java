@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,16 +17,13 @@ import com.capgemini.pecunia.exception.TransactionDoesNotExist;
 import com.capgemini.pecunia.repository.PassbookRepository;
 
 @Service
-public class PassbookServiceImpl implements PassbookService {
+@Transactional
+public class PassbookServiceImpl implements IPassbookService {
 
 	@Autowired
 	private PassbookRepository dao;
 
-	Account account = new Account();
 
-	long millis = System.currentTimeMillis();
-
-	Date date = new Date(millis);
 
 	/**
 	 * Returns a list of transactions occurred between the given period
@@ -64,11 +63,13 @@ public class PassbookServiceImpl implements PassbookService {
 	 */
 	@Override
 	public boolean accountValidation(long accountId) {
-		account = dao.get(accountId);
-		if (account == null) {
-			return false;
-		} else {
+//		Account account = new Account();
+		
+		if (dao.existsById(accountId)) {
 			return true;
+		} else {
+			throw new AccountDoesNotExistException();
+
 		}
 
 	}
@@ -102,6 +103,10 @@ public class PassbookServiceImpl implements PassbookService {
 	 */
 	@Override
 	public void updatelastUpdated(long accountId) {
+		long millis = System.currentTimeMillis();
+
+		Date date = new Date(millis);
+
 		dao.update(accountId, date);
 
 	}

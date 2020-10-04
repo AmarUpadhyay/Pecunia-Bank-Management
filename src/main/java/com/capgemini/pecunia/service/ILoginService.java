@@ -2,7 +2,7 @@ package com.capgemini.pecunia.service;
 
 import com.capgemini.pecunia.entity.Employee;
 
-public interface LoginService {
+public interface ILoginService {
 
 	Employee saveDetails(Employee employee);
 

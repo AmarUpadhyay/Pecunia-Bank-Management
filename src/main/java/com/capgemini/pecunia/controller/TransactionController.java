@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.capgemini.pecunia.entity.Cheque;
 import com.capgemini.pecunia.exception.AccountDoesNotExistException;
 import com.capgemini.pecunia.exception.TransactionDoesNotExist;
-import com.capgemini.pecunia.service.TransactionService;
+import com.capgemini.pecunia.service.ITransactionService;
 /**
  * 
  * @author Amar
@@ -19,11 +19,11 @@ import com.capgemini.pecunia.service.TransactionService;
  */
 @CrossOrigin(origins="http://localhost:4200")
 @RestController
-@RequestMapping(value="/api/transaction")
+@RequestMapping("/bank")
 public class TransactionController {
 
 	@Autowired
-	private TransactionService transactionService;
+	private ITransactionService transactionService;
 	
 	/**
 	 * API that returns the status of the transaction

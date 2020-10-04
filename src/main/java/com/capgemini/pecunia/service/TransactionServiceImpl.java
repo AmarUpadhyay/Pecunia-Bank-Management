@@ -14,7 +14,7 @@ import com.capgemini.pecunia.repository.ChequeRepository;
 import com.capgemini.pecunia.repository.TransactionRepository;
 @Service
 @Transactional
-public class TransactionServiceImpl implements TransactionService {
+public class TransactionServiceImpl implements ITransactionService {
 
 	@Autowired
 	private AccountRepository accountRepository;
